@@ -1,7 +1,7 @@
 package br.com.jobis.job_management.modules.controllers;
 
-import br.com.jobis.job_management.modules.dtos.AuthCompanyDTO;
-import br.com.jobis.job_management.modules.services.CompanyService;
+import br.com.jobis.job_management.modules.dtos.AuthCandidateRequestDTO;
+import br.com.jobis.job_management.modules.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthCompanyController {
+@RequestMapping("/candidate")
+public class AuthCandidateController {
 
     @Autowired
-    private CompanyService companyService;
+    private CandidateService candidateService;
 
-    @PostMapping("/company")
-    public ResponseEntity<Object> authorize(@RequestBody AuthCompanyDTO authCompanyDTO) {
-        try {
-            var result = this.companyService.authCompany(authCompanyDTO);
-            return ResponseEntity.ok().body(result);
+    @PostMapping("/auth")
+    public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDTO){
+
+        try{
+            var token = this.candidateService.AuthCandidate(authCandidateRequestDTO);
+            return  ResponseEntity.ok().body(token);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
+
     }
 }

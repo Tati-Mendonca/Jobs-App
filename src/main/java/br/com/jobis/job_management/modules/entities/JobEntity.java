@@ -1,15 +1,20 @@
-package br.com.jobis.job_management.modules.job;
+package br.com.jobis.job_management.modules.entities;
 
-import br.com.jobis.job_management.modules.company.CompanyEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name="job")
 public class JobEntity {
 
@@ -26,7 +31,7 @@ public class JobEntity {
     private String level;
     private Double wage;
 
-    @NotBlank(message = "O campo [category] é obrigatório")
+//    @NotBlank(message = "O campo [category] é obrigatório")
     private String category;
 
     @ManyToOne

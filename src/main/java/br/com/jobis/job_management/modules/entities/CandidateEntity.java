@@ -1,4 +1,4 @@
-package br.com.jobis.job_management.modules.candidate;
+package br.com.jobis.job_management.modules.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

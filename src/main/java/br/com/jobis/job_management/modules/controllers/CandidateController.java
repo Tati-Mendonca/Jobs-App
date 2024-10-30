@@ -1,6 +1,6 @@
 package br.com.jobis.job_management.modules.controllers;
 
-import br.com.jobis.job_management.modules.candidate.CandidateEntity;
+import br.com.jobis.job_management.modules.entities.CandidateEntity;
 import br.com.jobis.job_management.modules.services.CandidateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class CandidateController {
     @Autowired
     private CandidateService candidateService;
 
-    @PostMapping("/")
+    @PostMapping("/post")
     public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity){
         try {
             var result = this.candidateService.create(candidateEntity);
