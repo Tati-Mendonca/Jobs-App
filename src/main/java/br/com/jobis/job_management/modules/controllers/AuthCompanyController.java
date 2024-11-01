@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/company")
 public class AuthCompanyController {
 
     @Autowired
     private CompanyService companyService;
 
-    @PostMapping("/company")
+    @PostMapping("/auth")
     public ResponseEntity<Object> authorize(@RequestBody AuthCompanyDTO authCompanyDTO) {
         try {
             var result = this.companyService.authCompany(authCompanyDTO);

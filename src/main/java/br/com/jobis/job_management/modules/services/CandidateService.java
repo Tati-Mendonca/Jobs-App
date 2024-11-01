@@ -2,6 +2,7 @@ package br.com.jobis.job_management.modules.services;
 
 import br.com.jobis.job_management.modules.dtos.AuthCandidateRequestDTO;
 import br.com.jobis.job_management.modules.dtos.AuthCandidateResponseDTO;
+import br.com.jobis.job_management.modules.dtos.ProfileCandidateResponseDTO;
 import br.com.jobis.job_management.modules.entities.CandidateEntity;
 import br.com.jobis.job_management.modules.repositories.CandidateRepository;
 import com.auth0.jwt.JWT;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.UUID;
 
 @Service
 public class CandidateService {
@@ -56,7 +58,7 @@ public class CandidateService {
         var token = JWT.create()
                 .withIssuer("jobis")
                 .withSubject(candidate.getId().toString())
-                .withClaim("roles", Arrays.asList("candidate"))
+                .withClaim("roles", Arrays.asList("CANDIDATE"))
                 .withExpiresAt(expireIn)
                 .sign(algorithm);
 
@@ -66,5 +68,21 @@ public class CandidateService {
                 .build();
 
         return authCandidateResponse;
+    }
+
+    public ProfileCandidateResponseDTO getProfileCandidate(UUID idCandidate){
+        var candidate = this.candidateRepository.findById(idCandidate)
+                .orElseThrow(()->{
+                    throw new RuntimeException("User not found");
+                });
+        var candidateDTO = ProfileCandidateResponseDTO.builder()
+                .description(candidate.getDescription())
+                .username(candidate.getUsername())
+                .email(candidate.getEmail())
+                .avatar(candidate.getAvatar())
+                .name(candidate.getName())
+                .curriculum(candidate.getCurriculum())
+                .build();
+        return candidateDTO;
     }
 }

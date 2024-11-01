@@ -1,6 +1,7 @@
 package br.com.jobis.job_management.modules.services;
 
 import br.com.jobis.job_management.modules.dtos.AuthCompanyDTO;
+import br.com.jobis.job_management.modules.dtos.AuthCompanyResponseDTO;
 import br.com.jobis.job_management.modules.entities.CompanyEntity;
 import br.com.jobis.job_management.modules.repositories.CompanyRepository;
 import com.auth0.jwt.JWT;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class CompanyService {
@@ -27,7 +29,7 @@ public class CompanyService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String authCompany(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
+    public AuthCompanyResponseDTO authCompany(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
         var company = this.companyRepository.findByUsername(authCompanyDTO.getUsername()).orElseThrow(
                 () -> {
                     throw new UsernameNotFoundException("Company not found");
@@ -41,11 +43,19 @@ public class CompanyService {
         }
         //Se for igual -> Gerar o token
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
+
+        var expiresIn = Instant.now().plus(Duration.ofHours(2));
         var token = JWT.create().withIssuer("jobis")
-                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
                 .withSubject(company.getId().toString())
+                .withExpiresAt(expiresIn)
+                .withClaim("roles", Arrays.asList("COMPANY"))
                 .sign(algorithm);
-        return token;
+
+        var authCompanyResponseDTO = AuthCompanyResponseDTO.builder()
+                .acess_token(token)
+                .expires_in(expiresIn.toEpochMilli())
+                .build();
+        return authCompanyResponseDTO;
     }
 
     public CompanyEntity createCompany(CompanyEntity companyEntity){
