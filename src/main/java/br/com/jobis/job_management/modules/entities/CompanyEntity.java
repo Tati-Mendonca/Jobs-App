@@ -1,5 +1,6 @@
 package br.com.jobis.job_management.modules.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,16 +23,20 @@ public class CompanyEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Schema(example = "My Company Ltda.")
 //    @Pattern(regexp = "^((\\b[A-zÀ-ú']{2,40}\\b)\\s*){2,}$", message = "O campo [name] não foi preenchido corretamente")
     @NotBlank(message = "O preenchimento do campo [name] é obrigatório")
     private String name;
 
+    @Schema(example = "MyCompany")
     @Pattern(regexp = "\\S+", message = "O campo [username] não deve conter espaço em branco")
     private String username;
 
+    @Schema(example = "mycompany@gmail.com")
     @Email(message = "O campo [email] deve conter um e-mail válido")
     private String email;
 
+    @Schema(example = "admin@123")
     @Length(min = 8, max = 100, message = "A senha deve conter entre 8 e 100 caracteres")
     private String password;
 

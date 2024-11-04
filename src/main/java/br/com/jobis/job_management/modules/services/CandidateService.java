@@ -4,7 +4,9 @@ import br.com.jobis.job_management.modules.dtos.AuthCandidateRequestDTO;
 import br.com.jobis.job_management.modules.dtos.AuthCandidateResponseDTO;
 import br.com.jobis.job_management.modules.dtos.ProfileCandidateResponseDTO;
 import br.com.jobis.job_management.modules.entities.CandidateEntity;
+import br.com.jobis.job_management.modules.entities.JobEntity;
 import br.com.jobis.job_management.modules.repositories.CandidateRepository;
+import br.com.jobis.job_management.modules.repositories.JobRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,11 +32,18 @@ public class CandidateService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JobRepository jobRepository;
+
+    public List<JobEntity> listAllJobsByFilter(String filter){
+        return this.jobRepository.findByDescriptionContainingIgnoreCase(filter);
+    }
+
     public CandidateEntity create(CandidateEntity candidateEntity){
         this.candidateRepository
                 .findByUsernameOrEmail(candidateEntity.getUsername(),candidateEntity.getEmail())
                 .ifPresent((user) -> {
-                    throw new RuntimeException("Já existe um usuário cadastro!");
+                    throw new RuntimeException("User already registered!");
                 });
 
         var password = passwordEncoder.encode(candidateEntity.getPassword());
@@ -85,4 +95,5 @@ public class CandidateService {
                 .build();
         return candidateDTO;
     }
+
 }

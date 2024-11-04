@@ -2,6 +2,7 @@ package br.com.jobis.job_management.modules.controllers;
 
 import br.com.jobis.job_management.modules.dtos.AuthCandidateRequestDTO;
 import br.com.jobis.job_management.modules.services.CandidateService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class AuthCandidateController {
     private CandidateService candidateService;
 
     @PostMapping("/auth")
+    @Tag(name = "Candidato")
     public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDTO){
 
         try{

@@ -2,6 +2,7 @@ package br.com.jobis.job_management.modules.controllers;
 
 import br.com.jobis.job_management.modules.dtos.AuthCompanyDTO;
 import br.com.jobis.job_management.modules.services.CompanyService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class AuthCompanyController {
     private CompanyService companyService;
 
     @PostMapping("/auth")
+    @Tag(name = "Empresa")
     public ResponseEntity<Object> authorize(@RequestBody AuthCompanyDTO authCompanyDTO) {
         try {
             var result = this.companyService.authCompany(authCompanyDTO);

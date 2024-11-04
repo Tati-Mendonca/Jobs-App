@@ -62,7 +62,7 @@ public class CompanyService {
         this.companyRepository
                 .findByUsernameOrEmail(companyEntity.getUsername(), companyEntity.getEmail())
                 .ifPresent((user)-> {
-                    throw new RuntimeException("Empresa já cadastrada!");
+                    throw new RuntimeException("Company already registered!");
                 });
 
         var password = passwordEncoder.encode(companyEntity.getPassword());
