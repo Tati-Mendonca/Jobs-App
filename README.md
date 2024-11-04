@@ -33,7 +33,7 @@ Certifique-se de que você tem as seguintes ferramentas instaladas em sua máqui
 - [PostgreSQL](https://www.postgresql.org/download/) ou outro banco de dados configurado para uso com este projeto
 - [Git](https://git-scm.com/) para clonar o repositório
 
-<h3>Clone o Repositório</h3>
+<h3>Clone </h3>
 
 1) git clone https://github.com/Tati-Mendonca/Jobs.git
 
@@ -41,7 +41,7 @@ Certifique-se de que você tem as seguintes ferramentas instaladas em sua máqui
 
 3) run 
 
-<h2>Funcionalidades Principais</h2>
+<h2>Main Features</h2>
 
 - Gerenciamento de Vagas:
   
